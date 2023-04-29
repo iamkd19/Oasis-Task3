@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do App</title>
+  <style>
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+    input[type="text"] {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do App</h1>
+  <input type="text" id="taskInput" placeholder="Enter a task">
+  <button onclick="addTask()">Add Task</button>
+  <ul id="taskList"></ul>
+
+  <script>
+    // Task list array
+    let tasks = [];
+
+    // Function to add a task
+    function addTask() {
+      let taskInput = document.getElementById('taskInput');
+      let taskList = document.getElementById('taskList');
+
+      // Get the task description
+      let taskDescription = taskInput.value;
+
+      if (taskDescription !== '') {
+        // Create a new task object
+        let task = {
+          description: taskDescription,
+          completed: false
+        };
+
+        // Add the task to the task list array
+        tasks.push(task);
+
+        // Clear the task input field
+        taskInput.value = '';
+
+        // Render the updated task list
+        renderTaskList();
+      }
+    }
+
+    // Function to render the task list
+    function renderTaskList() {
+      let taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      // Iterate through the tasks array
+      for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i];
+
+        // Create a list item element
+        let li = document.createElement('li');
+
+        // Create a checkbox element
+        let checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = task.completed;
+        checkbox.addEventListener('change', function() {
+          // Update the completed status of the task
+          task.completed = this.checked;
+        });
+
+        // Create a span element for the task description
+        let span = document.createElement('span');
+        span.textContent = task.description;
+
+        // Add the checkbox and span to the list item
+        li.appendChild(checkbox);
+        li.appendChild(span);
+
+        // Add the list item to the task list
+        taskList.appendChild(li);
+      }
+    }
+  </script>
+</body>
+</html>
+
